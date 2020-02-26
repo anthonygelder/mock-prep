@@ -213,22 +213,15 @@ class LinkedList {
     }
 }
 
-function main() {
-    let SLL = new LinkedList();
-    SLL.insertLast(1)
-    SLL.insertLast(2)
-    SLL.insertLast(4)
-    SLL.insertLast(5)
-    SLL.insertLast(5)
-    SLL.insertLast(6)
-    SLL.insertLast(7)
-    return SLL;
+let SLL = new LinkedList();
+
+const vals = [4,5,6,4,5,6,6]
+
+for (let i = 0; i < vals.length; i++) {
+    SLL.insertLast(vals[i])
 }
 
-let SLL = main()
-
 // console.log(SLL)
-
 
 // Given a sorted linked list, write an algorithm to 
 // delete all duplicate numbers from the sorted linked list.
@@ -249,31 +242,76 @@ function deleteDupes(list) {
     let nextNode = list.head.next;
     
     // loop through linked list
-    while(currNode !== null) {
-        console.log('current node ' + currNode.value + ' and next node ' + nextNode.value )
+    while(nextNode) {
+        // console.log('current node ' + currNode.value + ' and next node ' + nextNode.value )
+        console.log(currNode.value);
 
         // while current node equals next node
-        if ( currNode === nextNode) {
-
+        while ( currNode.value === nextNode.value ) {
+            currNode.next = nextNode.next
             // next node equals next next node
-        }
-    
+            nextNode = nextNode.next
+        } 
         // once current node does not equal next node set current nodes pointer to the following note
 
         currNode = currNode.next
         nextNode = nextNode.next
+    
     }
-
-
-
-    // return list
-
+    console.log(list)
+    return list
 }
 
-// console.log(deleteDupes(SLL))
+// deleteDupes(SLL)
+
+// time complexity - Exponential time O(2^n)
+
+// UNSORTED --------------
+
+// examples
+
+// 1,2,3,4,5,5,6 -> 1,2,3,4,5,6
+// 1 -> 1
+
+function deleteDupes(list) {
+    // check if the linked list has only one node, if yes return the list
+    if (list.head.next === null) {
+        return list
+    }
+
+    // set current node 
+    let currNode = list.head
+    
+    // loop through linked list
+    while(currNode) {
+
+        // set next node to current.next
+        let nextNode = currNode.next
 
 
+        // loop through remaining list
+        while(nextNode) {
+            // check if curr === next
+            if(currNode.value === nextNode.value) {
+                // if yes current.next === nextNode.next && nextnode === current.next
+                currNode.next = nextNode.next
+                nextNode = currNode.next
+            } else {
+                // else nextnode === nextnode.next
+                nextNode = nextNode.next
+            }
+        }
 
+        // currNode to curr.next
+        currNode = currNode.next
+    }
+    console.log(list)
+    // return list
+}
+
+// deleteDupes(SLL)
+
+// time complexity - Exponential time O(2^n)
 
 // --------------------------------------------------------------------------------------------------------------
 
@@ -514,11 +552,55 @@ function alpha(str) {
             arr.push(digits[n])
         } else {
             arr.push(lower[i])
-        }
+        }   
     }
     return arr.join('')
 }
 
-console.log(alpha('1-800-Flowers'))
-console.log(alpha('1-800-Flasda-123'))
+// console.log(alpha('1-800-Flowers'))
+// console.log(alpha('1-800-Flasda-123'))
 
+// --------------------------------------------------------------------------------------------------------------
+
+
+// You are given a dataset containing positive and negative integers. Write an algorithm to find the largest sum in a continuous sequence.
+
+// [|3,8,3,-9,-4,2,1,5|] -> 14
+// [-9,|3,3,-4,2,1,5|,-4] -> 10
+// [-3,3,-4,|5,5,-2,2|,-1,-2] -> 12
+// [|1,1,1,1,1|] -> 5
+// [1] -> 1
+// [1,1] -> 2
+
+function largestSum(arr) {
+    // set over all max
+    let max = 0
+
+    // outer loop starting at i 
+    for (let i = 0; i < arr.length; i++ ) {
+        // set temp max
+        let tempMax = arr[i]
+
+        // loop again at i + 1
+        for (let j = i+1; j < arr.length; j++) {
+            
+            // temp max plus i
+            tempMax = tempMax + arr[j]
+            
+            // check if temp max is greater then max
+            if (tempMax > max) {
+                // max equal temp max
+                max = tempMax
+            }
+        }
+    }
+    console.log(max) 
+}
+
+// largestSum([3,8,3,-9,-4,2,1,5])
+// largestSum([-9,3,3,-4,2,1,5,-4])
+// largestSum([1,1,1,1,1])
+largestSum([-3,3,-4,5,5,-2,2,-1,-2])
+
+
+// --------------------------------------------------------------------------------------------------------------
