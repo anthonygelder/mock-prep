@@ -560,6 +560,9 @@ function alpha(str) {
 // console.log(alpha('1-800-Flowers'))
 // console.log(alpha('1-800-Flasda-123'))
 
+// time complexity - linear (O(n)) more efficient
+
+
 // --------------------------------------------------------------------------------------------------------------
 
 
@@ -567,7 +570,7 @@ function alpha(str) {
 
 // [|3,8,3,-9,-4,2,1,5|] -> 14
 // [-9,|3,3,-4,2,1,5|,-4] -> 10
-// [-3,3,-4,|5,5,-2,2|,-1,-2] -> 12
+// [-3,3,-4,|5,5,-2,2|,-1,-2] -> 10
 // [|1,1,1,1,1|] -> 5
 // [1] -> 1
 // [1,1] -> 2
@@ -600,7 +603,120 @@ function largestSum(arr) {
 // largestSum([3,8,3,-9,-4,2,1,5])
 // largestSum([-9,3,3,-4,2,1,5,-4])
 // largestSum([1,1,1,1,1])
-largestSum([-3,3,-4,5,5,-2,2,-1,-2])
+// largestSum([-3,3,-4,5,5,-2,2,-1,-2])
 
+// time complexity - Exponential time O(2^n)
 
 // --------------------------------------------------------------------------------------------------------------
+
+
+// Given a string, write an algorithm to count the number of words in the string that are palindromes. 
+// The output must include a list of the palindromes and the number of palindromes.
+
+// "mom gave mom a Tesla as a racecar" -> `Dad, mom, racecar, 3 Palindromes`
+// 'racecar' -> 'racecar, 1 Palindromes'
+// 'steve is cool' -> '0 Palindromes'
+
+function pal(str) {
+    // declare palindrome count
+    let pals = 0
+
+    // declare empty palindrome array
+    const arr = []
+    
+    const strArr = str.split(' ')
+    console.log(strArr)
+    // loop over words
+    for (let i = 0; i < strArr.length; i++) {
+
+        // check word if palindrome
+
+        if (strArr[i].length > 1) {
+
+            
+            const first = strArr[i].slice(0, strArr[i].length / 2 ) 
+            const second = strArr[i].slice(Math.ceil(strArr[i].length / 2) , strArr[i].length).split('').reverse().join('')
+            console.log(first)
+            console.log(second)
+            
+            // if yes, push to palindrome array and increase count
+            if (first === second) {
+                arr.push(strArr[i])
+                pals++
+            }
+            
+        }
+        
+
+    }
+
+    arr.push(`${pals} Palindromes`)
+    console.log(arr.join(', '))
+
+    // return palindromes and count
+}
+
+// pal("mom gave mom a Tesla as a racecar")
+// pal('rawar')
+
+
+
+// --------------------------------------------------------------------------------------------
+
+
+
+//Given a list of integers find the mode and the frequency of the mode. The mode in a list of numbers is the value that occurs the most often. 
+// If no number in the list is repeated, then there is no mode for the list.
+
+// - Input: `1, 2, 3, 6, 10, 3, 5, 6, 3, 3`
+// - Output: `Mode = 3, Frequency of mode = 4`
+
+// - Input: `1`
+// - Output: `Mode = 1, Frequency of mode = 1`
+
+// - Input: `1, 2, 3, 6, 10, 3, 5, 6, 3, 3`
+// - Output: `Mode = 3, Frequency of mode = 4`
+
+
+function mode(str) {
+    // mode object variable
+    const nums = []
+
+    // string to array
+    const arr = str.split(',')
+    // console.log(arr)
+    // loop over array
+    for (let i = 0; i < arr.length ; i++) {
+        // let num = arr[i]
+        console.log(arr[i])
+        // check if object contains number
+        if(nums[arr[i]]) {
+            // if yes add to count
+            // nums[arr[i]]++
+            // nums[arr[i]] = parseInt(nums[arr[i]]) + 1
+            console.log(arr[i], nums[arr[i]])
+            console.log('yes')
+        } else {
+            // if no add number
+            const num = {[arr[i]]:1}
+            nums.push(num)
+            console.log('no')
+        }
+        
+    }
+
+
+
+    console.log(nums)
+    // find most frequent number
+    for (let i = 0; i < nums.length; i++) {
+        // console.log(max)
+
+    }
+    // return it 
+
+    // console.log(`Mode = ${max}, Frequency of mode = ${max}`)
+    // return `Mode = ${max}, Frequency of mode = ${max}`
+}
+
+mode(`1,2,3,6,10,3,5,6,3,3`)
