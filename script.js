@@ -80,25 +80,44 @@ function wordCount(str) {
     }
 
     // declare word string
-    let wordStr = ''
-    // loop over object and format
-    for (const word in obj) {
-        wordStr += `${word} = ${obj[word]}, `
-    }
+    // let wordStr = ''
+    // // loop over object and format
+    // for (const word in obj) {
+    //     wordStr += `${word} = ${obj[word]}, `
+    // }
 
     // return string
-    return wordStr
+    // return wordStr
+    return obj
 
 
 }
+// const str = 'a quick brown fox brown a a a a a b b'
 
-// const str = "Hello there, how are you? Can you tell me how to get to the nearest Starbucks?"
+const str = "Hello there, how are you? Can you tell me how to get to the nearest Starbucks?"
 // console.log(wordCount(str))
 // console.log(wordCount("Hello, hello, hello"))
-// console.log(wordCount(''))
-
+// console.log(wordCount(str))
 
 // time complexity - linear (O(n))
+
+function countOfWords(string) {
+    // const array = string.split(' ')
+    const array = str.replace(/,/g,'').replace(/\?/g,'').toLowerCase().split(' ')
+
+    const words = {}
+    for(i = 0; i < array.length; i++) {
+        if(! (array[i] in words) ) {
+            words[array[i]] = 1
+        } else {
+            words[array[i]]++
+        }
+    }
+   return words
+}
+
+console.log(countOfWords(str))
+
 
 
 
@@ -328,13 +347,10 @@ function fibSeries(x) {
     }
     // declare [0,1] array
     const arr = [0,1]
-
     // loop x times
     for(let i = 0; i < x - 1; i++ ) {
-
         // add previous 2 indexes and push into array
-        // const num = arr[0 + i] + arr[1 + i]
-        arr.push(arr[0 + i] + arr[1 + i])
+        arr.push(arr[i] + arr[1 + i])
     }
     // return array
     return arr
@@ -659,7 +675,7 @@ function pal(str) {
 // pal("mom gave mom a Tesla as a racecar")
 // pal('rawar')
 
-
+// time complexity - linear (O(n))
 
 // --------------------------------------------------------------------------------------------
 
@@ -680,43 +696,111 @@ function pal(str) {
 
 function mode(str) {
     // mode object variable
-    const nums = []
+    const nums = {}
 
     // string to array
     const arr = str.split(',')
-    // console.log(arr)
+
     // loop over array
     for (let i = 0; i < arr.length ; i++) {
-        // let num = arr[i]
-        console.log(arr[i])
         // check if object contains number
-        if(nums[arr[i]]) {
+        if(arr[i] in nums) {
             // if yes add to count
-            // nums[arr[i]]++
-            // nums[arr[i]] = parseInt(nums[arr[i]]) + 1
-            console.log(arr[i], nums[arr[i]])
-            console.log('yes')
+            nums[arr[i]]++
         } else {
             // if no add number
-            const num = {[arr[i]]:1}
-            nums.push(num)
-            console.log('no')
+            nums[arr[i]] = 1
         }
         
     }
 
-
-
     console.log(nums)
+    let max = 0
+    let returnStr = ''
     // find most frequent number
-    for (let i = 0; i < nums.length; i++) {
-        // console.log(max)
-
+    for (let i in nums) {
+        if (nums[i] > max) {
+            max = nums[i]
+            returnStr = `Mode = ${i}, Frequency of mode = ${max}`
+        } 
     }
-    // return it 
 
-    // console.log(`Mode = ${max}, Frequency of mode = ${max}`)
+    // return it 
+    console.log(returnStr)
     // return `Mode = ${max}, Frequency of mode = ${max}`
 }
 
-mode(`1,2,3,6,10,3,5,6,3,3`)
+// mode(`1,2,3,6,10,3,5,6,3,3`)
+
+
+
+
+// --------------------------------------------------------------------------------------------
+
+// Given 2 linked lists, where each node in each linked list represents a character in a string, 
+// write a function compare() that compares the 2 strings, i.e., it returns 0 if both strings are the same, 
+// 1 if the 1st linked list is lexicographically greater, and -1 if the 2nd string is lexicographically greater.
+
+// - Input: `list 1: B->i->l->b->o->a, list 2: B->i->l->b->o` 
+// - Output: `1`
+
+// - Input: `list 1: B->i->l->b->o, list 2: B->i->l->b->o`
+// - Output: `0`
+
+// - Input: `list 1: B->i->l->b->o->a, list 2: B->i->l->b->o->b` 
+// - Output: `-1`
+
+let LL2 = new LinkedList();
+let LL1 = new LinkedList();
+
+const word1 = ['B','i','l','b','o','a']
+const word2 = ['z','i','l','b','o','q','z']
+
+for (let i = 0; i < word1.length; i++) {
+    LL1.insertLast(word1[i])
+}
+
+for (let i = 0; i < word2.length; i++) {
+    LL2.insertLast(word2[i])
+}
+
+function compare(list1, list2) {
+    // declare 2 arrays to push letters into
+    const arr1 = []
+    const arr2 = []
+
+    let curr1 = list1.head
+    let curr2 = list2.head
+
+    // loop over both lists
+    while(curr1) {
+        // push letter into array
+        arr1.push(curr1.value)
+
+        curr1 = curr1.next
+    }
+
+    while(curr2) {
+        // push letter into array
+
+        arr2.push(curr2.value)
+        
+        curr2 = curr2.next
+    }
+    // join array into str
+    const str1 = arr1.join('')
+    const str2 = arr2.join('')
+
+    console.log(str1, str2)
+
+    // compare strings
+    if(str1 === str2) {
+        return 0
+    } else if (str1 > str2) {
+        return 1
+    } else {
+        return -1
+    }
+}
+
+// console.log(compare(LL1, LL2))
